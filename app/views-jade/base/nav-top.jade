@@ -1,0 +1,17 @@
+nav.navbar.navbar-default(role="navigation")
+    .container-fluid
+        .navbar-header
+            button.navbar-toggle(data-toggle="collapse", type="button", data-target="#bs-example-navbar-collapse-1")
+                span.sr-onl Toggle navigation
+            a.navbar-brand 大鹏系统
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+
+            ul.nav.navbar-nav
+                each menu in pvlDs.menus
+                    li.dropdown
+                        a.dropdown-toggle(href="#", data-toggle="dropdown") #{menu.name}
+                            span.caret
+                        ul.dropdown-menu(role="menu")
+                            each child in menu.children
+                                li
+                                    a(href="#{child.url}") #{child.name}

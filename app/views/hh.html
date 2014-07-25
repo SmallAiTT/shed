@@ -1,0 +1,28 @@
+<%
+
+    test = function(){
+        %> <div>asdfadsfafd</div> <%
+    }
+
+    createTBrBtnGrp = function(pre, arr, args){
+        for(var i = 0, li = arr.length; i < li; ++i){
+            var str = arr[0], icon = null, funcStr = 'hh.testTBBtn()';
+            if(str == "C"){//新增
+                icon = "icon-add";
+            }else if(str == "U"){//修改
+                icon = "icon-edit";
+            }else if(str == "R"){//查看
+                icon = "icon-search";
+            }else if(str == "D"){//删除
+                icon = "icon-remove";
+            }
+            var pvlCode = pre + "_" + str;//得到权限码
+            var btnPvl = pvlDs.btnPvlMap[pvlCode];//获取到按键权限数据
+        %> <div>------------</div> <%
+            if(!btnPvl) return;//没有权限就直接返回
+            %>
+<a href="#" class="easyui-linkbutton" iconCls="<%= icon %>" plain="true" onclick="<%= funcStr %>"><%= btnPvl.name %></a>
+<%
+        }
+    }
+%>

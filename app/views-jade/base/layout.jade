@@ -1,0 +1,22 @@
+html
+    head
+        block styles
+            link(href="/lib/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+            link(href="/lib/easyui/themes/icon.css", rel="stylesheet")
+            link(href="/lib/easyui/themes/bootstrap/easyui.css", rel="stylesheet")
+            link(href="/css/tt.css", rel="stylesheet")
+        block scripts
+            script(src='/lib/jquery.min.js')
+            script(src='/lib/bootstrap/js/bootstrap.min.js')
+            script(src='/lib/easyui/jquery.easyui.min.js')
+            script(src='/lib/tt/tt.js')
+        include profile
+    body
+        include nav-top
+        block content
+
+        block foot
+            #footer
+                p some footer content
+        block biz
+        block boot

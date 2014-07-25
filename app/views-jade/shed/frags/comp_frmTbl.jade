@@ -1,0 +1,18 @@
+input(name="id", hidden="true")
+table
+    tr
+        mixin validBox_td("code:零件编号", "required:true")
+    tr
+        mixin validBox_td("name:零件名称", "required:true")
+    tr
+        mixin comboBox_td("isBase:是否是基础零件", "required:true,data:__shed.comboData.isBase,onSelect:__shed.onIsBaseChanged")
+    tr
+        mixin validBox_td("spec:规格", "required:true")
+    tr
+        mixin comboBox_td("mates:材质", "required:true,data:__shed.comboData.mates")
+    tr
+        mixin validBox_td("unit:单位", "required:true")
+    tr
+        mixin validBox_td("img:零件图示", "")
+    tr
+        mixin textarea_td("remark:备注", "", 50)

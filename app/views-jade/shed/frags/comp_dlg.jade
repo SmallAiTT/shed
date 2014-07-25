@@ -1,0 +1,52 @@
+-var pvl = pvlDs.pvlMap["shed_comp_mgr_c"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}',onOpen:__shed.initCompFrm")
+        div
+            form.tt-init(method="post")
+                include comp_frmTbl
+    mixin dlgBtns(pvl)
+    //btns end
+//shed_comp_mgr_c end
+
+-var pvl = pvlDs.pvlMap["shed_comp_mgr_u"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                include comp_frmTbl
+    mixin dlgBtns(pvl)
+    //btns end
+//shed_comp_mgr_u end
+
+-var pvl = pvlDs.pvlMap["shed_comp_mgr_r"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                include comp_frmTbl
+    //btns end
+//shed_comp_mgr_r end
+
+-var pvl = pvlDs.pvlMap["shed_comp_mgr_lc"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    //子零件列表弹出框
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true")
+        div
+            input.parentComp(hidden="true")
+            table#compChildren.easyui-datagrid(queryUrl="#{pvl.url}", pagination="true", rownumbers="true", singleSelect="true", toolbar="#compChildrenTblToolBar", data-options="onLoadError:tt.onLoadError4DataGrid")
+                include comp_tblThead
+                //datagrid end
+            #compChildrenTblToolBar(style="padding:5px;height:auto")
+                div(style="margin-bottom:5px")
+                    mixin pvlTBBtn("shed_comp_mgr_cc", "icon-add", "tt.showDlg_c", "#compChildren")
+                    mixin pvlTBBtn("shed_comp_mgr_rc", "icon-search", "tt.showDlg_r", "#compChildren")
+                    mixin pvlTBBtn("shed_comp_mgr_dc", "icon-remove", "tt.delData", "#compChildren")
+            //toolbar end
+            //include frags/comp_dlg

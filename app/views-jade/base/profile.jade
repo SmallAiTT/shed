@@ -1,0 +1,76 @@
+//打权限编码的toolbarBtn
+mixin pvlTBBtn(pvlCode, icon, func, tblId)
+    -var args = Array.prototype.slice.call(arguments)
+    -var btnPvl = pvlDs.pvlMap[pvlCode]
+    if btnPvl
+        -var id = "toolBarBtn_" + pvlCode
+        - args.splice(0, 3, pvlCode)
+        - args.splice(2, 0, btnPvl.url)
+        - func += "('" + args.join("','") + "')"
+        //div= func
+        a.easyui-linkbutton(id="#{id}", href="#", iconCls="#{icon}", plain="true", onclick="#{func}") #{btnPvl.name}
+//pvlTBBtn end
+
+mixin dlgBtns(pvl)
+    -var btnsId = 'btns_' + pvl.code
+    div(id="#{btnsId}")
+        a.easyui-linkbutton(href="javascript:return false;", onclick="tt.submitDlgFrm('#{pvl.code}', '#{pvl.url}')") 保存
+        a.easyui-linkbutton(href="javascript:return false;", onclick="tt.closeDlg('#{pvl.code}')") 取消
+
+mixin input_td(className, info, dataOptions)
+    -var index = info.indexOf(":")
+    -var name = info, txt = null
+    -if(index > 0) {
+    -   name = info.substring(0, index)
+    -   txt = info.substring(index + 1) + "："
+    -}
+    if txt!=null
+        td.tt-fld-label-td
+            label= txt
+    td
+        input.textbox(name="#{name}", class="#{className}", data-options="#{dataOptions}")
+
+mixin validBox_td(info, dataOptions)
+    mixin input_td("easyui-validatebox", info, dataOptions)
+
+mixin numBox_td(info, dataOptions)
+    mixin input_td("easyui-numberbox", info, dataOptions)
+
+mixin comboBox_td(info, dataOptions)
+    mixin input_td("easyui-combobox", info, dataOptions)
+
+mixin textarea_td(info, dataOptions, cols)
+    -var index = info.indexOf(":")
+    -var name = info, txt = null
+    -if(index > 0) {
+    -   name = info.substring(0, index)
+    -   txt = info.substring(index + 1) + "："
+    -}
+    if txt!=null
+        td.tt-fld-label-td
+            label= txt
+    td
+        textarea.easyui-validatebox(name="#{name}", data-options="#{dataOptions}", cols="#{cols}")
+//
+mixin btnBox_td(info, dataOptions, btnInfo, btnDataOptions)
+    -var index = info.indexOf(":")
+    -var name = info, txt = null
+    -if(index > 0) {
+    -   name = info.substring(0, index)
+    -   txt = info.substring(index + 1) + "："
+    -}
+
+    -var btnIndex = btnInfo.indexOf(":")
+    -var btnName = btnInfo, btnTxt = null
+    -if(btnIndex > 0) {
+    -   btnName = btnInfo.substring(0, btnIndex)
+    -   btnTxt = btnInfo.substring(btnIndex + 1)
+    -}
+    if txt!=null
+        td.tt-fld-label-td
+            label= txt
+    td
+        -var inputClassName = "easyui-linkbutton inputbtn_" + name
+        input.textbox(name="#{name}", class="#{className}", data-options="#{dataOptions}")
+        a(name="#{btnName}", href="javascript:return false;", class="#{inputClassName}", data-options="#{btnDataOptions}") #{btnTxt}
+//

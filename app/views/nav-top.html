@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">大鹏系统</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="nav-top-container">
+        <ul class="nav navbar-nav">
+            <%
+                var menus = pvlDs.menus;
+                for(var i=0; i< menus.length; i++) {
+                    var menu = menus[i];
+                    var name = menu.name;
+                    var code = menu.code;
+                    var classStr = "dropdown";
+                    if(i == 0) classStr += " active";
+                    var children = menu.children || [];
+            %>
+            <li class="<%= classStr %>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= name %> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+            <%
+                    for(var j = 0; j < children.length; j++){
+                        var child = children[j];
+                        var cName = child.name;
+                        var cUrl = child.url;
+            %>
+            <li><a href="<%= cUrl %>"><%= cName %></a></li>
+            <%
+                    }
+            %>
+                </ul>
+            </li>
+            <% } %>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>

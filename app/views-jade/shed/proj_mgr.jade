@@ -1,0 +1,25 @@
+extends ../base/layout
+block biz
+    script(src="/js/shed.js")
+block content
+    div
+        -var tblPvl = pvlDs.pvlMap["shed_proj_mgr_l"]
+        if tblPvl
+            table#projTbl.easyui-datagrid(title="项目列表", url="#{tblPvl.url}", pagination="true", rownumbers="true", singleSelect="true", toolbar="#projTblToolBar", data-options="onLoadError:tt.onLoadError4DataGrid")
+                thead
+                    tr
+                        th(field="id", width="100") 项目ID
+                        th(field="name", width="100") 项目名称
+                        th(field="state", width="100", combodata="__shed.comboData.projState") 状态
+                        th(field="remark", width="100") 备注
+                        th(field="xls", width="100", hidden="true") 下载零件清单
+            //datagrid end
+
+        #projTblToolBar(style="padding:5px;height:auto")
+            div(style="margin-bottom:5px")
+                mixin pvlTBBtn("shed_proj_mgr_c", "icon-add", "tt.showDlg_c", "#projTbl")
+                mixin pvlTBBtn("shed_proj_mgr_u", "icon-edit", "tt.showDlg_u", "#projTbl")
+                mixin pvlTBBtn("shed_proj_mgr_r", "icon-search", "tt.showDlg_r", "#projTbl")
+                mixin pvlTBBtn("shed_proj_mgr_d", "icon-remove", "tt.delData", "#projTbl")
+        //toolbar end
+        include frags/proj_dlg

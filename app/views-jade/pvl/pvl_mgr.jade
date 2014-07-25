@@ -1,0 +1,28 @@
+extends ../base/layout
+block biz
+    script(src="/js/pvl.js")
+block content
+    div
+        -var pvlTblUrl = pvlDs.pvlMap["pvl_mgr_l"].url
+        table#pvlTbl.easyui-datagrid(title="权限列表", url="#{pvlTblUrl}", pagination="true", rownumbers="true", singleSelect="true", toolbar="#pvlTblToolBar", data-options="onLoadError:tt.onLoadError4DataGrid")
+            thead
+                tr
+                    th(field="code", width="100") 权限编号
+                    th(field="name", width="100") 权限名称
+                    th(field="type", width="100") 权限类型
+                    th(field="url", width="100") url
+                    th(field="parent", width="100") 父节点
+                    th(field="remark", width="100") 备注
+        //datagrid end
+
+    #pvlTblToolBar(style="padding:5px;height:auto")
+        div(style="margin-bottom:5px")
+            mixin pvlTBBtn("pvl_mgr_c", "icon-add", "tt.showDlg_c", "#pvlTbl")
+            mixin pvlTBBtn("pvl_mgr_u", "icon-edit", "tt.showDlg_u", "#pvlTbl")
+            mixin pvlTBBtn("pvl_mgr_r", "icon-search", "tt.showDlg_r", "#pvlTbl")
+            mixin pvlTBBtn("pvl_mgr_d", "icon-remove", "tt.delData", "#pvlTbl")
+    //toolbar end
+    include frags/pvl_dlg
+block boot
+    script.
+        //__pvl.init();

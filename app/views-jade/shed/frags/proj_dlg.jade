@@ -1,0 +1,62 @@
+-var pvl = pvlDs.pvlMap["shed_proj_mgr_c"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                table
+                    tr
+                        mixin validBox_td("name", "项目名称：", "required:true")
+                    tr
+                        mixin comboBox_td("state", "状态：", "required:true,data:__shed.comboData.projState")
+                    tr
+                        mixin textarea_td("remark", "备注：", "", 50)
+                //table end
+             //form end
+
+    mixin dlgBtns(pvl)
+    //btns end
+//shed_proj_mgr_c end
+
+-var pvl = pvlDs.pvlMap["shed_proj_mgr_u"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post", readonlys="id")
+                input(name="id", type="hidden")
+                table
+                    tr
+                        mixin validBox_td("name", "项目名称：", "required:true")
+                    tr
+                        mixin comboBox_td("state", "状态：", "required:true,data:__shed.comboData.projState")
+                    tr
+                        mixin textarea_td("remark", "备注：", "", 50)
+
+                //table end
+                //form end
+    mixin dlgBtns(pvl)
+    //btns end
+//shed_proj_mgr_u end
+
+-var pvl = pvlDs.pvlMap["shed_proj_mgr_r"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                input(name="id", type="hidden")
+                table
+                    tr
+                        mixin validBox_td("name", "项目名称：", "required:true")
+                    tr
+                        mixin comboBox_td("state", "状态：", "required:true,data:__shed.comboData.projState")
+                    tr
+                        mixin textarea_td("remark", "备注：", "", 50)
+                //table end
+                //form end
+    //btns end
+//shed_proj_mgr_r end

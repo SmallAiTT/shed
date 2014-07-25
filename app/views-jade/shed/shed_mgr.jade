@@ -1,0 +1,32 @@
+extends ../base/layout
+block biz
+    script(src="/js/shed.js")
+block content
+    div
+        -var tblPvl = pvlDs.pvlMap["shed_shed_mgr_l"]
+        if tblPvl
+            table#shedTbl.easyui-datagrid(title="大鹏列表", url="#{tblPvl.url}", pagination="true", rownumbers="true", singleSelect="true", toolbar="#shedTblToolBar", data-options="onLoadError:tt.onLoadError4DataGrid")
+                thead
+                    tr
+                        th(field="id", width="100") 大棚ID
+                        th(field="projId", width="100") 项目ID
+                        th(field="schemaId", width="100") 方案ID
+                        th(field="name", width="100") 大棚名称
+                        th(field="schemaName", width="100") 方案名称
+                        th(field="lengths", width="100") 棚长
+                        th(field="topScrolls", width="100") 顶卷膜器
+                        th(field="edgeScrolls", width="100") 侧卷膜器
+                        th(field="frontScrolls", width="100") 前卷膜器
+                        th(field="num", width="100") 棚数量
+                        th(field="state", width="100") 状态
+                        th(field="remark", width="100") 备注
+            //datagrid end
+
+        #shedTblToolBar(style="padding:5px;height:auto")
+            div(style="margin-bottom:5px")
+                mixin pvlTBBtn("shed_shed_mgr_c", "icon-add", "tt.showDlg_c", "#shedTbl")
+                mixin pvlTBBtn("shed_shed_mgr_u", "icon-edit", "tt.showDlg_u", "#shedTbl")
+                mixin pvlTBBtn("shed_shed_mgr_r", "icon-search", "tt.showDlg_r", "#shedTbl")
+                mixin pvlTBBtn("shed_shed_mgr_d", "icon-remove", "tt.delData", "#shedTbl")
+        //toolbar end
+        include frags/shed_dlg

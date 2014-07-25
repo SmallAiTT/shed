@@ -1,0 +1,20 @@
+extends ../base/layout
+block biz
+    script(src="/js/shed.js")
+block content
+    div
+        -var tblPvl = pvlDs.pvlMap["shed_comp_mgr_l"]
+        if tblPvl
+            table#compTbl.easyui-datagrid(title="零件列表", url="#{tblPvl.url}", pagination="true", rownumbers="true", singleSelect="true", toolbar="#compTblToolBar", data-options="onLoadError:tt.onLoadError4DataGrid")
+                include frags/comp_tblThead
+            //datagrid end
+
+        #compTblToolBar(style="padding:5px;height:auto")
+            div(style="margin-bottom:5px")
+                mixin pvlTBBtn("shed_comp_mgr_c", "icon-add", "tt.showDlg_c", "#compTbl")
+                mixin pvlTBBtn("shed_comp_mgr_u", "icon-edit", "tt.showDlg_u", "#compTbl")
+                mixin pvlTBBtn("shed_comp_mgr_r", "icon-search", "tt.showDlg_r", "#compTbl")
+                mixin pvlTBBtn("shed_comp_mgr_d", "icon-remove", "tt.delData", "#compTbl")
+                mixin pvlTBBtn("shed_comp_mgr_lc", "icon-remove", "__shed.showCompChildren", "#compTbl")
+        //toolbar end
+        include frags/comp_dlg

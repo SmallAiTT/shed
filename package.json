@@ -1,0 +1,16 @@
+{
+    "name" : "shed",
+    "version" : "0.0.1",
+    "main" : "./app/app.js",
+    "dependencies" : {
+        "express" : ">=4.0.0",
+        "mysql" : "*",
+        "mysql-queues": ">=0.3.0",
+        "async" : "*",
+        "generic-pool" : "*",
+        "body-parser" : "*",
+        "morgan" : "*",
+        "ejs" : "*",
+        "jade" : "*"
+    }
+}

@@ -1,0 +1,77 @@
+-var pvl = pvlDs.pvlMap["pvl_mgr_c"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                table
+                    tr
+                        mixin validBox_td("code", "权限编号：", "required:true")
+                    tr
+                        mixin validBox_td("name", "权限名称：", "required:true")
+                    tr
+                        mixin validBox_td("type", "权限类型：", "required:true")
+                    tr
+                        mixin validBox_td("url", "url：", "")
+                    tr
+                        mixin validBox_td("parent", "父节点：", "")
+                    tr
+                        mixin textarea_td("remark", "备注：", "", 50)
+                //table end
+             //form end
+
+    mixin dlgBtns(pvl)
+    //btns end
+//pvl_mgr_c end
+
+-var pvl = pvlDs.pvlMap["pvl_mgr_u"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                table
+                    tr
+                        mixin validBox_td("code", "权限编号：", "")
+                    tr
+                        mixin validBox_td("name", "权限名称：", "required:true")
+                    tr
+                        mixin validBox_td("type", "权限类型：", "required:true")
+                    tr
+                        mixin validBox_td("url", "url：", "")
+                    tr
+                        mixin validBox_td("parent", "父节点：", "")
+                    tr
+                        mixin textarea_td("remark", "备注：", "", 50)
+                //table end
+                //form end
+    mixin dlgBtns(pvl)
+    //btns end
+//pvl_mgr_u end
+
+-var pvl = pvlDs.pvlMap["pvl_mgr_r"]
+if pvl
+    -var dlgId = 'dlg_' + pvl.code
+    -var btnsId = '#btns_' + pvl.code
+    .easyui-dialog(id="#{dlgId}", title="#{pvl.name}", data-options="width:600,height:400,modal:true,closed:true,buttons:'#{btnsId}'")
+        div
+            form(method="post")
+                table
+                    tr
+                        mixin validBox_td("code", "权限编号：", "required:true")
+                    tr
+                        mixin validBox_td("name", "权限名称：", "required:true")
+                    tr
+                        mixin validBox_td("type", "权限类型：", "required:true")
+                    tr
+                        mixin validBox_td("url", "url：", "")
+                    tr
+                        mixin validBox_td("parent", "父节点：", "")
+                    tr
+                        mixin textarea_td("remark", "备注：", "", 50)
+                //table end
+                //form end
+    //dlg end
+//pvl_mgr_r end
