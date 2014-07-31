@@ -1,0 +1,39 @@
+<!-- 零件的cur弹出框 开始 -->
+<%
+    var opt = {
+        shed_comp_mgr_c : {onOpen : "", btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]}
+    }
+    for(var pvlCode in opt){
+        var pvl = pvlDs.pvlMap[pvlCode]
+        if(pvl){
+            var info = opt[pvlCode];
+            var dlgId = "dlg_" + pvlCode;
+            var btnsId = "btns_" + pvlCode;
+            var btnsId2 = "#" + btnsId
+            var btns = info.btns;
+            var onOpen = info.onOpen || null;
+            %>
+                <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
+                     data-options="width:600,height:400,modal:true,closed:false,buttons:'<%= btnsId2 %>',onOpen:<%= onOpen %>">
+                    <div>
+                        <form class="tt-init" method="post">
+                            <% include ./comp_frmTbl.html %>
+                        </form>
+                    </div>
+                </div>
+                <div id="<%= btnsId%>">
+                    <%
+                    for(var i = 0; i < btns.length; ++i){
+                        var btnInfo = btns[i];
+                        %>
+                        <a class="easyui-linkbutton" pvlCode="<%= pvlCode %>" data-options="onClick:<%= btnInfo.onClick%>"><%= btnInfo.txt%></a>
+                        <%
+                    }
+                    %>
+
+                </div>
+            <%
+        }
+    }
+%>
+<!-- 零件的cur弹出框 结束 -->

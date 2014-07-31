@@ -1,0 +1,35 @@
+<input name="id" hidden />
+<table>
+    <tr>
+        <td><label class="tt-fld-label-td">零件编号：</label></td>
+        <td><input name="code" class="easyui-validatebox" data-options="required:true" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">零件名称：</label></td>
+        <td><input name="name" class="easyui-validatebox" data-options="required:true" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">是否是基础零件：</label></td>
+        <td><input name="isBase" class="easyui-combobox" data-options="required:true,data:__shed.comboData.isBase,onSelect:__shed.onIsBaseChanged" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">规格：</label></td>
+        <td><input name="spec" class="easyui-validatebox" data-options="required:true" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">材质：</label></td>
+        <td><input name="mates" class="easyui-combobox" data-options="required:true,data:__shed.comboData.mates" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">单位：</label></td>
+        <td><input name="unit" class="easyui-validatebox" data-options="required:true" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">零件图示：</label></td>
+        <td><input name="img" class="easyui-validatebox" data-options="" /></td>
+    </tr>
+    <tr>
+        <td><label class="tt-fld-label-td">备注：</label></td>
+        <td><textarea name="remark" class="" data-options="" cols="50"></textarea></td>
+    </tr>
+</table>
