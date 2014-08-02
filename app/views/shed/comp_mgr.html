@@ -2,47 +2,50 @@
 <script src="/js/shed.js" type="text/javascript"></script>
 <div>
     <%
-        var tblPvl = pvlDs.pvlMap["shed_comp_mgr_l"];
-        if(tblPvl){
-            %>
-            <table class="easyui-datagrid" title="零件列表" url="<%= tblPvl.url %>"
-                   pagination="true" rownumbers="true" singleSelect="true"
-                   toolbar="#compTblToolBar" data-options="onLoadError:tt.onLoadError4DataGrid">
-                <thead>
-                    <tr>
-                        <% include ./frags/comp_tblThead.html %>
-                    </tr>
-                </thead>
-            </table>
-            <!--table end-->
+    var tblPvl = pvlDs.pvlMap["shed_comp_mgr_l"];
+    if(tblPvl){
+    %>
+    <table id="compTbl" class="easyui-datagrid" title="零件列表" url="<%= tblPvl.url %>"
+           pagination="true" rownumbers="true" singleSelect="true"
+           toolbar="#compTblToolBar" data-options="onLoadError:tt.onLoadError4DataGrid">
+        <thead>
+        <tr>
+            <% include ./frags/comp_tblFields.html %>
+        </tr>
+        </thead>
+    </table>
+    <!--table end-->
 
 
-            <div id="compTblToolBar" style="padding:5px;height:auto">
-                <%
-                    var opt = {
-                        shed_comp_mgr_c : {icon:"icon-add", func:"tt.showDlg_c"},
-                        shed_comp_mgr_u : {icon:"icon-edit", func:"tt.showDlg_u"},
-                        shed_comp_mgr_r : {icon:"icon-search", func:"tt.showDlg_r"},
-                        shed_comp_mgr_d : {icon:"icon-remove", func:"tt.delData"},
-                        shed_comp_mgr_lc : {icon:"icon-remove", func:"__shed.showCompChildren"}
-                    }
-                    for(var pvlCode in opt){
-                        var btnPvl = pvlDs.pvlMap[pvlCode];
-                        var info = opt[pvlCode];
-                        if(btnPvl){
-                            %>
-                            <a class="easyui-linkbutton" icon="<%= info.icon %>" pvlCode="<%= pvlCode %>"
-                               data-options="onClick:'<%= info.func %>'"><%= btnPvl.name %></a>
-                            <%
-                        }
-                    }
-                %>
-            </div>
-            <%
+    <div id="compTblToolBar" style="padding:5px;height:auto">
+        <%
+        var opt = {
+        shed_comp_mgr_c : {icon:"icon-add", func:"tt.showDlg_c"},
+        shed_comp_mgr_u : {icon:"icon-edit", func:"tt.showDlg_u"},
+        shed_comp_mgr_r : {icon:"icon-search", func:"tt.showDlg_r"},
+        shed_comp_mgr_d : {icon:"icon-remove", func:"tt.delData", confirm:"删除零件将会连同其零件组关系一同删除，是否继续？"},
+        shed_comp_mgr_lc : {icon:"icon-search", func:"__shed.showCompChildren"}
         }
+        for(var pvlCode in opt){
+        var btnPvl = pvlDs.pvlMap[pvlCode];
+        var info = opt[pvlCode];
+        if(btnPvl){
+        %>
+        <a class="easyui-linkbutton" icon="<%= info.icon %>" pvlCode="<%= pvlCode %>" url="<%= btnPvl.url %>"
+            data-options="onClick:<%= info.func %>"
+            confirm="<%= info.confirm%>"
+            ><%= btnPvl.name %></a>
+        <%
+        }
+        }
+        %>
+    </div>
+    <%
+    }
     %>
 
 </div>
 
 <% include ./frags/comp_dlg.html %>
+<% include ./frags/comp_childrenDlg.html %>
 <% include ../base/footer.html %>

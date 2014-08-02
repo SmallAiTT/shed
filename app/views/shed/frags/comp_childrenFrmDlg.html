@@ -1,0 +1,65 @@
+<!-- 零件的cur弹出框 开始 -->
+<%
+var opt = {
+shed_comp_mgr_cc : {btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]},
+shed_comp_mgr_uc : {btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]},
+shed_comp_mgr_rc : {btns:[]}
+}
+for(var pvlCode in opt){
+    var pvl = pvlDs.pvlMap[pvlCode]
+    if(pvl){
+        var info = opt[pvlCode];
+        var dlgId = "dlg_" + pvlCode;
+        var btnsId = "btns_" + pvlCode;
+        var btnsId2 = "#" + btnsId
+        var btns = info.btns;
+        %>
+        <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
+             data-options="width:600,height:400,modal:true,closed:true,buttons:'<%= btnsId2 %>'">
+            <div>
+                <form class="tt-init" method="post">
+                    <input name="parentId" hidden />
+                    <input name="oldId" hidden />
+                    <input name="id" hidden />
+                    <table>
+                        <tr>
+                            <td><label class="tt-fld-label-td">子零件编号：</label></td>
+                            <td><input name="code" class="easyui-validatebox" readonly data-options="required:true" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="tt-fld-label-td">子零件名称：</label></td>
+                            <td><input name="name" class="easyui-validatebox" readonly data-options="required:true" /></td>
+                            <%
+                            var btnPvl = pvlDs.pvlMap["shed_comp_mgr_sc"]
+                            if(pvl && pvlCode != "shed_comp_mgr_rc"){
+                                %>
+                                <td><a class="easyui-linkbutton" pvlCode="<%= btnPvl.code%>" data-options="onClick:__shed.showCompToBeSelected">选择子零件</a></td>
+                                <%
+                            }
+                            %>
+                        </tr>
+                        <tr>
+                            <td><label class="tt-fld-label-td">子零件数量</label></td>
+                            <td><input name="count" class="easyui-numberbox" data-options="required:true" /></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div id="<%= btnsId%>">
+            <%
+            for(var i = 0; i < btns.length; ++i){
+                var btnInfo = btns[i];
+                %>
+                <a class="easyui-linkbutton" pvlCode="<%= pvlCode %>" url="<%= pvl.url %>" data-options="onClick:<%= btnInfo.onClick%>"><%= btnInfo.txt%></a>
+                <%
+            }
+            %>
+            <a class="easyui-linkbutton" data-options="onClick:tt.closeDlg">取消</a>
+        </div>
+        <%
+    }
+}
+%>
+<% include ./comp_toBeSelected.html %>
+<!-- 零件的cur弹出框 结束 -->

@@ -1,3 +1,36 @@
+/**
+ * From扩展
+ * getData 获取数据接口
+ *
+ * @param {Object} jq
+ * @param {Object} params 设置为true的话，会把string型"true"和"false"字符串值转化为boolean型。
+ */
+$.extend($.fn.form.methods, {
+    getData: function(jq, params){
+        var formArray = jq.serializeArray();
+        var oRet = {};
+        for (var i in formArray) {
+            if (typeof(oRet[formArray[i].name]) == 'undefined') {
+                if (params) {
+                    oRet[formArray[i].name] = (formArray[i].value == "true" || formArray[i].value == "false") ? formArray[i].value == "true" : formArray[i].value;
+                }
+                else {
+                    oRet[formArray[i].name] = formArray[i].value;
+                }
+            }
+            else {
+                if (params) {
+                    oRet[formArray[i].name] = (formArray[i].value == "true" || formArray[i].value == "false") ? formArray[i].value == "true" : formArray[i].value;
+                }
+                else {
+                    oRet[formArray[i].name] += "," + formArray[i].value;
+                }
+            }
+        }
+        return oRet;
+    }
+});
+
 var tt = tt || {};
 
 tt.onLoadError4DataGrid = function(error){
@@ -53,47 +86,114 @@ tt.getFrmInDlg = function($dlg){
     return $frm;
 }
 
-//通过权限编码获取到dialog
-tt.getDlgByPvlCode = function(pvlCode, tblId){
-    var $dlg = $("#dlg_" + pvlCode);
-    if(tblId) $dlg.attr("tblId", tblId);
-    return $dlg;
-};
-
 //通过权限编码显示create类型的弹出框
-tt.showDlg_c = function(pvlCode, tblId){
-    var $dlg = tt.getDlgByPvlCode(pvlCode, tblId);
-    tt.getFrmInDlg($dlg).form("load", {});
+tt.showDlg_c = function($tbBtn, onCheck){
+    $tbBtn = $tbBtn || $(this);
+    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    var data = {};
+    var params = $tbl.attr("params");
+    if(params) {
+        params = JSON.parse(params);
+        if(params){
+            for (var key in params) {
+                data[key] = params[key];
+            }
+        }
+    }
+    if(!onCheck){
+        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var pvlCode = $tbBtn.attr("pvlCode");
+    var $dlg = $("#dlg_" + pvlCode);
+    var $frm = tt.getFrmInDlg($dlg);
+    //TODO 重置
+    $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
+    $frm.form("load", data);
     $dlg.dialog("open");
 }
 //通过权限编码显示update类型的弹出框
-tt.showDlg_u = function(pvlCode, tblId){
-    var $dlg = tt.getDlgByPvlCode(pvlCode, tblId);
-    var $tbl = $(tblId);
+tt.showDlg_u = function($tbBtn, onCheck){
+    $tbBtn = $tbBtn || $(this);
+    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要修改的数据！");
-    tt.getFrmInDlg($dlg).form("load", data);
+    var params = $tbl.attr("params");
+    if(params) {
+        params = JSON.parse(params);
+        if(params){
+            for (var key in params) {
+                data[key] = params[key];
+            }
+        }
+    }
+    if(!onCheck){
+        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var pvlCode = $tbBtn.attr("pvlCode");
+    var $dlg = $("#dlg_" + pvlCode);
+    var $frm = tt.getFrmInDlg($dlg);
+    $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
+    $frm.form("load", data);
     $dlg.dialog("open");
 }
 
 //通过权限编码显示read类型的弹出框
-tt.showDlg_r = function(pvlCode, tblId){
-    var $dlg = tt.getDlgByPvlCode(pvlCode, tblId);
-    var $tbl = $(tblId);
+tt.showDlg_r = function($tbBtn, onCheck){
+    $tbBtn = $tbBtn || $(this);
+    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要查看的数据！");
+    var params = $tbl.attr("params");
+    if(params) {
+        params = JSON.parse(params);
+        if(params){
+            for (var key in params) {
+                data[key] = params[key];
+            }
+        }
+    }
+    if(!onCheck){
+        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var pvlCode = $tbBtn.attr("pvlCode");
+    var $dlg = $("#dlg_" + pvlCode);
     var $frm = tt.getFrmInDlg($dlg);
+    $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
     $frm.form("load", data);
     $frm.find("input").attr("readonly", "readonly");
     $frm.find("textarea").attr("readonly", "readonly");
-    $frm.find(".easyui-combobox").combobox({readonly : true});
+    $frm.find(".easyui-combobox").combobox("readonly");
     $dlg.dialog("open");
 }
 //根据权限编码提交表单并且关闭弹出框
-tt.submitDlgFrm = function(pvlCode, url){
-    var $dlg = tt.getDlgByPvlCode(pvlCode);
+tt.submitDlgFrm = function($frmBtn, onCheck){
+    $frmBtn = $frmBtn || $(this);
+    var $dlg = $frmBtn.parents(".easyui-dialog")
+    if(!onCheck){
+        var onCheckFuncStr = $frmBtn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck({}, $frm, $frmBtn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
     var $frm = tt.getFrmInDlg($dlg);
-    console.log(pvlCode, url);
+    var url = $frmBtn.attr("url");
     $frm.form("submit", {
         url : url,
         success : function(data){
@@ -107,7 +207,7 @@ tt.submitDlgFrm = function(pvlCode, url){
                 result = {type : "error", msg : result}
             }
             tt.showMsg(result, function(){
-                var $tbl = $($dlg.attr("tblId"));
+                var $tbl = $($dlg.attr("tbl"));
                 $tbl.datagrid("reload");
                 $dlg.dialog("close");
             });
@@ -116,16 +216,37 @@ tt.submitDlgFrm = function(pvlCode, url){
 //    $frm.submit();
 };
 //关闭弹出窗
-tt.closeDlg = function(pvlCode){
-    var $dlg = tt.getDlgByPvlCode(pvlCode);
+tt.closeDlg = function($frmBtn){
+    $frmBtn = $frmBtn || $(this);
+    var $dlg = $frmBtn.parents(".easyui-dialog")
     $dlg.dialog("close");
 };
 
-tt.delData = function(pvlCode, tblId, url){
-    var $tbl = $(tblId);
+tt.delData = function($tbBtn, onCheck){
+    $tbBtn = $tbBtn || $(this);
+    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要删除的数据！");
-    $.messager.confirm('确认','您确认想要删除记录吗？',function(r){
+    var params = $tbl.attr("params");
+    if(params) {
+        params = JSON.parse(params);
+        if(params){
+            for (var key in params) {
+                data[key] = params[key];
+            }
+        }
+    }
+    if(!onCheck){
+        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var url = $tbBtn.attr("url");
+    var confirmMsg = $tbBtn.attr("confirm") || '您确认要删除该数据？'
+    $.messager.confirm('确认', confirmMsg,function(r){
         if (r){
             $.post(url, data, function(result){
                 $tbl.datagrid("reload");
@@ -152,7 +273,7 @@ tt.colFormatter = function(value,row,index){
 };
 
 tt.getTblByTBBtn = function(tbBtn){
-    var dataGridPanel = tbBtn.parent(".datagrid");
+    var dataGridPanel = tbBtn.parents(".datagrid");
     return dataGridPanel.find("table.easyui-datagrid")
 }
 tt.getValueByForm = function($form, name){

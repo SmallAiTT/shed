@@ -10,7 +10,7 @@
     </tr>
     <tr>
         <td><label class="tt-fld-label-td">是否是基础零件：</label></td>
-        <td><input name="isBase" class="easyui-combobox" data-options="required:true,data:__shed.comboData.isBase,onSelect:__shed.onIsBaseChanged" /></td>
+        <td><input name="isBase" class="easyui-combobox" data-options="required:true,editable:false,data:__shed.comboData.isBase,onSelect:__shed.onIsBaseChanged" /></td>
     </tr>
     <tr>
         <td><label class="tt-fld-label-td">规格：</label></td>
@@ -18,13 +18,13 @@
     </tr>
     <tr>
         <td><label class="tt-fld-label-td">材质：</label></td>
-        <td><input name="mates" class="easyui-combobox" data-options="required:true,data:__shed.comboData.mates" /></td>
+        <td><input name="mates" class="easyui-combobox" data-options="required:true,editable:false,data:__shed.comboData.mates" /></td>
     </tr>
     <tr>
         <td><label class="tt-fld-label-td">单位：</label></td>
         <td><input name="unit" class="easyui-validatebox" data-options="required:true" /></td>
     </tr>
-    <tr>
+    <tr hidden="true">
         <td><label class="tt-fld-label-td">零件图示：</label></td>
         <td><input name="img" class="easyui-validatebox" data-options="" /></td>
     </tr>

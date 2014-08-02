@@ -1,0 +1,45 @@
+<%
+var pvl = pvlDs.pvlMap["shed_comp_mgr_lc"]
+if(pvl){
+    %>
+    <div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="<%= pvl.name %>"
+         data-options="width:900,height:400,modal:true,closed:true">
+        <div>
+            <table id="compChildrenTbl" class="easyui-datagrid" queryUrl="<%= pvl.url %>"
+                   pagination="true" rownumbers="true" singleSelect="true"
+                   toolbar="#compChildrenTblToolBar" data-options="onLoadError:tt.onLoadError4DataGrid">
+                <thead>
+                <tr>
+                    <% include ./comp_tblFields.html %>
+                    <th field="parentId" hidden="true">数量</th>
+                    <th field="count" width="100">数量</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div id="compChildrenTblToolBar" style="padding:5px;height:auto">
+        <%
+        var opt = {
+        shed_comp_mgr_cc : {icon:"icon-add", func:"tt.showDlg_c"},
+        shed_comp_mgr_uc : {icon:"icon-edit", func:"tt.showDlg_u"},
+        shed_comp_mgr_rc : {icon:"icon-search", func:"tt.showDlg_r"},
+        shed_comp_mgr_dc : {icon:"icon-remove", func:"tt.delData"}
+        }
+        for(var pvlCode in opt){
+            var btnPvl = pvlDs.pvlMap[pvlCode];
+            var info = opt[pvlCode];
+            if(btnPvl){
+                %>
+                <a class="easyui-linkbutton" icon="<%= info.icon %>" pvlCode="<%= pvlCode %>" url="<%= btnPvl.url %>"
+                   onCheck="__shed.onCheck4ChildrenFrm" data-options="onClick:<%= info.func %>"><%= btnPvl.name %></a>
+                <%
+            }
+        }
+        %>
+    </div>
+    <% include ./comp_childrenFrmDlg.html %>
+    <%
+}
+%>
