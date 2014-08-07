@@ -33,7 +33,7 @@ for(var pvlCode in opt){
                             var btnPvl = pvlDs.pvlMap["shed_comp_mgr_sc"]
                             if(pvl && pvlCode != "shed_comp_mgr_rc"){
                                 %>
-                                <td><a class="easyui-linkbutton" pvlCode="<%= btnPvl.code%>" data-options="onClick:__shed.showCompToBeSelected">选择子零件</a></td>
+                                <td><a class="easyui-linkbutton" pvlCode="<%= btnPvl.code%>" queryParams="parentId,currChildId:id" map="id,code,name" data-options="onClick:tt.showSelDlg">选择子零件</a></td>
                                 <%
                             }
                             %>

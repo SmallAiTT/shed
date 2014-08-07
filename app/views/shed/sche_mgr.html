@@ -1,0 +1,57 @@
+<% include ../base/header.html %>
+<script src="/js/shed.js" type="text/javascript"></script>
+<div>
+    <%
+    var tblPvl = pvlDs.pvlMap["shed_sche_mgr_l"];
+    if(tblPvl){
+    var tblId = "tbl_" + tblPvl.code;
+    var barId = tblId + "_toolBar";
+    %>
+    <table id="<%= tblId %>" class="easyui-datagrid" title="零件列表" url="<%= tblPvl.url %>"
+           pagination="true" rownumbers="true" singleSelect="true"
+           toolbar="<%= '#' + barId %>" data-options="onLoadError:tt.onLoadError4DataGrid">
+        <thead>
+        <tr>
+            <th field="id" hidden="true" width="100">公式id</th>
+            <th field="name" width="100">方案名称</th>
+            <th field="remark" width="200">备注</th>
+        </tr>
+        </thead>
+    </table>
+    <!--table end-->
+
+
+    <div id="<%= barId %>" style="padding:5px;height:auto">
+        <%
+        var opt = {
+        shed_sche_mgr_c : {icon:"icon-add", func:"tt.showDlg_c"},
+        shed_sche_mgr_u : {icon:"icon-edit", func:"tt.showDlg_u"},
+        shed_sche_mgr_r : {icon:"icon-search", func:"tt.showDlg_r"},
+        shed_sche_mgr_d : {icon:"icon-remove", func:"tt.delData", confirm:"删除方案会连同其配置的零件公式列表一并删除，是否继续？"},
+        shed_compExp_mgr_l : {icon:"icon-edit", func:"__shed.showCompExpListDlg"}
+        }
+        for(var pvlCode in opt){
+        var btnPvl = pvlDs.pvlMap[pvlCode];
+        var info = opt[pvlCode];
+        info.confirm = info.confirm || "";
+        if(btnPvl){
+        %>
+        <a class="easyui-linkbutton" icon="<%= info.icon %>" pvlCode="<%= pvlCode %>" url="<%= btnPvl.url %>"
+           data-options="onClick:<%= info.func %>"
+           confirm="<%= info.confirm%>"
+                ><%= btnPvl.name %></a>
+        <%
+        }
+        }
+        %>
+    </div>
+    <%
+    }
+    %>
+
+</div>
+<% include ./frags/sche_dlg.html %>
+<% include ./frags/compExp_dlg.html %>
+<% include ./frags/compAll_toBeSelected.html %>
+<% include ./frags/expAll_toBeSelected.html %>
+<% include ../base/footer.html %>

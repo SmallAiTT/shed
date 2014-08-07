@@ -1,5 +1,5 @@
 <%
-var pvl = pvlDs.pvlMap["shed_comp_mgr_sc"]
+var pvl = pvlDs.pvlMap["shed_comp_mgr_l"]
 if(pvl){
     var btnsId = "btns_" + pvl.code;
     var btnsId2 = "#" + btnsId;
@@ -7,7 +7,7 @@ if(pvl){
     <div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="零件列表"
         data-options="width:900,height:400,modal:true,closed:true,buttons:'<%= btnsId2%>'">
         <div>
-            <table id="compToBeSelectedTbl" class="easyui-datagrid" queryUrl="<%= pvl.url %>"
+            <table class="easyui-datagrid" queryUrl="<%= pvl.url %>"
                    pagination="true" rownumbers="true" singleSelect="true"
                    data-options="onLoadError:tt.onLoadError4DataGrid">
                 <thead>

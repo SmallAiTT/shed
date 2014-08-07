@@ -258,6 +258,52 @@ tt.delData = function($tbBtn, onCheck){
     });
 }
 
+tt.showSelDlg = function($btn, onCheck){
+    $btn = $btn || $(this);
+    var $btn = $(this);//先获取按键
+    var $frm = $btn.parents("form");//当前的表单
+    var data = $frm.form("getData")
+    var $dlg = $("#dlg_" + $btn.attr("pvlCode"));
+    $dlg.attr("dlg", "#" + $btn.parents(".easyui-dialog").attr("id"))
+    var $tbl = $dlg.find(".easyui-datagrid");
+    var url = $tbl.attr("queryUrl");
+    var map = $btn.attr("map") || "";
+    $dlg.attr("map", map);
+    var queryParamsStr = $btn.attr("queryParams");
+    var queryParams = {};
+    if(queryParamsStr && queryParamsStr != ""){
+        var strArr = queryParamsStr.split(",");
+        for(var i = 0; i < strArr.length; ++i){
+            var strArr2 = strArr[i].split(":");
+            var key1 = strArr2[0];
+            var key2 = strArr2[1] || key1;
+            queryParams[key1] = data[key2];
+        }
+    }
+    $tbl.datagrid({ url : url, queryParams : queryParams });
+    $dlg.dialog("open");
+};
+tt.selData = function($btn, onCheck){
+    $btn = $btn || $(this);//先获取按键
+    var $dlg = $btn.parents(".easyui-dialog");//当前弹出框
+    var $tbl = $dlg.find(".easyui-datagrid");//零件列表的dataGrid
+    var data = $tbl.datagrid("getSelected");
+    if(!data) return tt.showWarn("请先选择数据！");
+    var $lastDlg = $($dlg.attr("dlg"));//找到上一个dlg对象
+    var $frm = $lastDlg.find("form");//找到目标表单对象
+    var mapStr = $dlg.attr("map");
+    if(mapStr && mapStr != ""){
+        var strArr = mapStr.split(",");
+        for(var i = 0; i < strArr.length; ++i){
+            var strArr2 = strArr[i].split(":");
+            var key1 = strArr2[0];
+            var key2 = strArr2[1] || key1;
+            $frm.find("input[name=" + key1 + "]").val(data[key2]);
+        }
+    }
+    $frm.form("validate");
+    $dlg.dialog("close");
+}
 
 tt.colFormatter = function(value,row,index){
     var col = this.col;

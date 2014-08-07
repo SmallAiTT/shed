@@ -69,32 +69,24 @@ __shed.showCompChildren = function($tbBtn){
 __shed.onCheck4ChildrenFrm = function(data){
     data.oldId = data.id;
 };
-__shed.showCompToBeSelected = function(){
-    var $btn = $(this);//先获取按键
-    var $frm = $btn.parents("form");//当前的表单
-    var data = $frm.form("getData")
-    var $dlg = $("#dlg_" + $btn.attr("pvlCode"));
-    $dlg.attr("dlg", "#" + $btn.parents(".easyui-dialog").attr("id"))
-    var $tbl = $dlg.find(".easyui-datagrid");
-    var url = $tbl.attr("queryUrl");
-    $tbl.datagrid({
-        url : url,
-        queryParams : {parentId : data.parentId, currChildId : data.id}
+//+++++++++++++++comp相关 结束+++++++++++++++++
+
+//+++++++++++++++方案相关 开始+++++++++++++++++
+__shed.showCompExpListDlg = function(){
+    var $tbBtn = $(this);
+    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    var data = $tbl.datagrid("getSelected");
+    if(!data) return tt.showWarn("请先选择需要配置的方案！");
+    var pvlCode = $tbBtn.attr("pvlCode");
+    var $dlg = $("#dlg_" + pvlCode);
+    var $targetTbl = $dlg.find("table.easyui-datagrid");
+    $targetTbl.attr("params", JSON.stringify({scheId : data.id}));
+    var queryUrl = $targetTbl.attr("queryUrl");
+
+    $targetTbl.datagrid({
+        url : queryUrl,
+        queryParams:{scheId : data.id}
     });
     $dlg.dialog("open");
 };
-__shed.setSelectedComp = function(){
-    var $btn = $(this);//先获取按键
-    var $dlg = $btn.parents(".easyui-dialog");//当前弹出框
-    var $tbl = $dlg.find(".easyui-datagrid");//零件列表的dataGrid
-    var data = $tbl.datagrid("getSelected");
-    if(!data) return tt.showWarn("请先选择数据！");
-    var $lastDlg = $($dlg.attr("dlg"));//找到上一个dlg对象
-    var $frm = $lastDlg.find("form");//找到目标表单对象
-    $frm.find("input[name=id]").val(data.id);
-    $frm.find("input[name=code]").val(data.code);
-    $frm.find("input[name=name]").val(data.name);
-    $frm.form("validate");
-    $dlg.dialog("close");
-}
-//+++++++++++++++comp相关 结束+++++++++++++++++
+//+++++++++++++++方案相关 结束+++++++++++++++++

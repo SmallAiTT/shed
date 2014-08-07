@@ -1,0 +1,136 @@
+<%
+var pvl = pvlDs.pvlMap["shed_compExp_mgr_l"]
+if(pvl){
+    var tblId = "tbl_" + pvl.code;
+    var barId = tblId + "_toolBar";
+    %>
+<div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="<%= pvl.name %>"
+     data-options="width:900,height:400,modal:true,closed:true">
+    <div>
+        <table id="<%= tblId%>" class="easyui-datagrid" queryUrl="<%= pvl.url %>"
+               pagination="true" rownumbers="true" singleSelect="true"
+               toolbar="<%= '#' + barId %>" data-options="onLoadError:tt.onLoadError4DataGrid">
+            <thead>
+            <tr>
+                <th field="id" hidden="true" width="100"></th>
+                <th field="scheId" hidden="true" width="100"></th>
+                <th field="compId" hidden="true" width="100"></th>
+                <th field="compName" width="100">零件名称</th>
+                <th field="expName" width="100">公式名称</th>
+                <th field="seq" width="100">顺序</th>
+                <th field="args" width="100" hidden="true">参数</th>
+                <th field="remark" width="100">备注</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div id="<%= barId %>" style="padding:5px;height:auto">
+    <%
+    var opt = {
+    shed_compExp_mgr_c : {icon:"icon-add", func:"tt.showDlg_c"},
+    shed_compExp_mgr_u : {icon:"icon-edit", func:"tt.showDlg_u"},
+    shed_compExp_mgr_r : {icon:"icon-search", func:"tt.showDlg_r"},
+    shed_compExp_mgr_d : {icon:"icon-remove", func:"tt.delData"}
+    }
+    for(var pvlCode in opt){
+    var btnPvl = pvlDs.pvlMap[pvlCode];
+    var info = opt[pvlCode];
+    if(btnPvl){
+    %>
+    <a class="easyui-linkbutton" icon="<%= info.icon %>" pvlCode="<%= pvlCode %>" url="<%= btnPvl.url %>"
+       onCheck="__shed.onCheck4ChildrenFrm" data-options="onClick:<%= info.func %>"><%= btnPvl.name %></a>
+    <%
+    }
+    }
+    %>
+</div>
+<%
+}
+%>
+
+
+
+
+<!-- 零件的cur弹出框 开始 -->
+<%
+var opt = {
+shed_compExp_mgr_c : {btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]},
+shed_compExp_mgr_u : {btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]},
+shed_compExp_mgr_r : {btns:[]}
+}
+for(var pvlCode in opt){
+    var pvl = pvlDs.pvlMap[pvlCode]
+    if(pvl){
+        var info = opt[pvlCode];
+        var dlgId = "dlg_" + pvlCode;
+        var btnsId = "btns_" + pvlCode;
+        var btnsId2 = "#" + btnsId
+        var btns = info.btns;
+        %>
+            <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
+                 data-options="width:600,height:400,modal:true,closed:true,buttons:'<%= btnsId2 %>'">
+                <div>
+                    <form class="tt-init" method="post">
+                        <input name="id" hidden />
+                        <input name="scheId" hidden />
+                        <input name="compId" hidden />
+                        <input name="expId" hidden />
+                        <table>
+                            <tr>
+                                <td><label class="tt-fld-label-td">零件名称：</label></td>
+                                <td><input name="compName" class="easyui-validatebox" data-options="required:true" /></td>
+                                <%
+                                var btnPvl = pvlDs.pvlMap["shed_comp_mgr_l"]
+                                if(pvl && pvlCode != "shed_compExp_mgr_r"){
+                                %>
+                                <td><a class="easyui-linkbutton" pvlCode="<%= btnPvl.code%>" map="compId:id,compName:name" data-options="onClick:tt.showSelDlg">选择子零件</a></td>
+                                <%
+                                }
+                                %>
+                            </tr>
+                            <tr>
+                                <td><label class="tt-fld-label-td">公式名称：</label></td>
+                                <td><input name="expName" class="easyui-validatebox" data-options="required:true" /></td>
+                                <%
+                                var btnPvl = pvlDs.pvlMap["shed_exp_mgr_l"]
+                                if(pvl && pvlCode != "shed_compExp_mgr_r"){
+                                %>
+                                <td><a class="easyui-linkbutton" pvlCode="<%= btnPvl.code%>" map="expId:id,expName:name" data-options="onClick:tt.showSelDlg">选择公式</a></td>
+                                <%
+                                }
+                                %>
+                            </tr>
+                            <tr>
+                                <td><label class="tt-fld-label-td">顺序：</label></td>
+                                <td><input name="seq" class="easyui-numberbox" data-options="required:true" /></td>
+                            </tr>
+                            <tr hidden="true">
+                                <td><label class="tt-fld-label-td">参数：</label></td>
+                                <td><input name="args" class="easyui-validatebox" data-options="" /></td>
+                            </tr>
+                            <tr>
+                                <td><label class="tt-fld-label-td">备注：</label></td>
+                                <td><textarea name="remark" class="" data-options="" cols="50"></textarea></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div id="<%= btnsId%>">
+                <%
+                for(var i = 0; i < btns.length; ++i){
+                    var btnInfo = btns[i];
+                    %>
+                    <a class="easyui-linkbutton" pvlCode="<%= pvlCode %>" url="<%= pvl.url %>" data-options="onClick:<%= btnInfo.onClick%>"><%= btnInfo.txt%></a>
+                    <%
+                }
+                %>
+                <a class="easyui-linkbutton" data-options="onClick:tt.closeDlg">取消</a>
+            </div>
+        <%
+    }
+}
+%>
+<!-- 零件的cur弹出框 结束 -->
