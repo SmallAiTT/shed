@@ -32,7 +32,7 @@ __shed.comboData = {
     }],
 
     projState : [{
-        value : "000", text : "未计算"
+        value : "000", text : "未完成"
     },{
         value : "001", text : "已完成"
     }],
@@ -50,11 +50,11 @@ __shed.comboData = {
 //显示子零件列表
 __shed.showCompChildren = function($tbBtn){
     var $tbBtn = $(this);
-    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要查看的数据！");
     if(data.isBase) return tt.showInfo("基础零件没有子零件！");
-    var pvlCode = $tbBtn.attr("pvlCode");
+    var pvlCode = $btn.attr("pvlCode");
     var $dlg = $("#dlg_" + pvlCode);
 
     var $targetTbl = $dlg.find(".easyui-datagrid");
@@ -74,10 +74,10 @@ __shed.onCheck4ChildrenFrm = function(data){
 //+++++++++++++++方案相关 开始+++++++++++++++++
 __shed.showCompExpListDlg = function(){
     var $tbBtn = $(this);
-    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要配置的方案！");
-    var pvlCode = $tbBtn.attr("pvlCode");
+    var pvlCode = $btn.attr("pvlCode");
     var $dlg = $("#dlg_" + pvlCode);
     var $targetTbl = $dlg.find("table.easyui-datagrid");
     $targetTbl.attr("params", JSON.stringify({scheId : data.id}));
@@ -90,3 +90,24 @@ __shed.showCompExpListDlg = function(){
     $dlg.dialog("open");
 };
 //+++++++++++++++方案相关 结束+++++++++++++++++
+
+__shed.calProjComp = function(){}
+__shed.finishProj = function(){
+    var $btn = $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
+    var data = $tbl.datagrid("getSelected");
+    if(!data) return tt.showWarn("请先选择需要完成的项目！");
+
+    var url = $btn.attr("url");
+    var confirmMsg = "完成后的项目将无法进行修改操作，是否继续？";
+    $.messager.confirm('确认', confirmMsg,function(r){
+        if (r){
+            $.post(url, data, function(result){
+                $tbl.datagrid("reload");
+                tt.showMsg(result);
+            }).error(function(){
+                    console.error("error--->", arguments)
+                });
+        }
+    });
+}

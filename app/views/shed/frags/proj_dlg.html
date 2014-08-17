@@ -1,0 +1,51 @@
+<!-- 零件的cur弹出框 开始 -->
+<%
+var opt = {
+shed_proj_mgr_c : {btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]},
+shed_proj_mgr_u : {btns:[{txt:"保存", onClick:"tt.submitDlgFrm"}]},
+shed_proj_mgr_r : {btns:[]}
+}
+for(var pvlCode in opt){
+    var pvl = pvlDs.pvlMap[pvlCode]
+    if(pvl){
+        var info = opt[pvlCode];
+        var dlgId = "dlg_" + pvlCode;
+        var btnsId = "btns_" + pvlCode;
+        var btnsId2 = "#" + btnsId
+        var btns = info.btns;
+        %>
+            <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
+                 data-options="width:600,height:200,modal:true,closed:true,buttons:'<%= btnsId2 %>'">
+                <div>
+                    <form class="tt-init" method="post">
+                        <input name="id" hidden />
+                        <input name="state" hidden />
+                        <table>
+                            <tr>
+                                <td><label class="tt-fld-label-td">项目名称：</label></td>
+                                <td><input name="name" class="easyui-validatebox" data-options="required:true" /></td>
+                            </tr>
+                            <tr>
+                                <td><label class="tt-fld-label-td">备注：</label></td>
+                                <td><textarea name="remark" class="" data-options="" cols="50"></textarea></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div id="<%= btnsId%>">
+                <%
+                for(var i = 0; i < btns.length; ++i){
+                    var btnInfo = btns[i];
+                    %>
+                    <a class="easyui-linkbutton" pvlCode="<%= pvlCode %>" url="<%= pvl.url %>" data-options="onClick:<%= btnInfo.onClick%>"><%= btnInfo.txt%></a>
+                    <%
+                }
+                %>
+                <a class="easyui-linkbutton" data-options="onClick:tt.closeDlg">取消</a>
+            </div>
+        <%
+    }
+}
+%>
+<!-- 零件的cur弹出框 结束 -->

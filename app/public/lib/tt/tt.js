@@ -88,8 +88,8 @@ tt.getFrmInDlg = function($dlg){
 
 //通过权限编码显示create类型的弹出框
 tt.showDlg_c = function($tbBtn, onCheck){
-    $tbBtn = $tbBtn || $(this);
-    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    $btn = $btn || $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = {};
     var params = $tbl.attr("params");
     if(params) {
@@ -101,14 +101,14 @@ tt.showDlg_c = function($tbBtn, onCheck){
         }
     }
     if(!onCheck){
-        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        var onCheckFuncStr = $btn.attr("onCheck");
         if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
     }
     if(onCheck) {
-        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
         if(result === false) return;
     }
-    var pvlCode = $tbBtn.attr("pvlCode");
+    var pvlCode = $btn.attr("pvlCode");
     var $dlg = $("#dlg_" + pvlCode);
     var $frm = tt.getFrmInDlg($dlg);
     //TODO 重置
@@ -118,8 +118,8 @@ tt.showDlg_c = function($tbBtn, onCheck){
 }
 //通过权限编码显示update类型的弹出框
 tt.showDlg_u = function($tbBtn, onCheck){
-    $tbBtn = $tbBtn || $(this);
-    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    $btn = $btn || $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要修改的数据！");
     var params = $tbl.attr("params");
@@ -132,14 +132,14 @@ tt.showDlg_u = function($tbBtn, onCheck){
         }
     }
     if(!onCheck){
-        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        var onCheckFuncStr = $btn.attr("onCheck");
         if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
     }
     if(onCheck) {
-        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
         if(result === false) return;
     }
-    var pvlCode = $tbBtn.attr("pvlCode");
+    var pvlCode = $btn.attr("pvlCode");
     var $dlg = $("#dlg_" + pvlCode);
     var $frm = tt.getFrmInDlg($dlg);
     $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
@@ -149,8 +149,8 @@ tt.showDlg_u = function($tbBtn, onCheck){
 
 //通过权限编码显示read类型的弹出框
 tt.showDlg_r = function($tbBtn, onCheck){
-    $tbBtn = $tbBtn || $(this);
-    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    $btn = $btn || $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要查看的数据！");
     var params = $tbl.attr("params");
@@ -163,14 +163,14 @@ tt.showDlg_r = function($tbBtn, onCheck){
         }
     }
     if(!onCheck){
-        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        var onCheckFuncStr = $btn.attr("onCheck");
         if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
     }
     if(onCheck) {
-        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
         if(result === false) return;
     }
-    var pvlCode = $tbBtn.attr("pvlCode");
+    var pvlCode = $btn.attr("pvlCode");
     var $dlg = $("#dlg_" + pvlCode);
     var $frm = tt.getFrmInDlg($dlg);
     $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
@@ -223,8 +223,8 @@ tt.closeDlg = function($frmBtn){
 };
 
 tt.delData = function($tbBtn, onCheck){
-    $tbBtn = $tbBtn || $(this);
-    var $tbl = tt.getTblByTBBtn($tbBtn);//获取到datagrid对象
+    $btn = $btn || $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要删除的数据！");
     var params = $tbl.attr("params");
@@ -237,15 +237,15 @@ tt.delData = function($tbBtn, onCheck){
         }
     }
     if(!onCheck){
-        var onCheckFuncStr = $tbBtn.attr("onCheck");
+        var onCheckFuncStr = $btn.attr("onCheck");
         if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
     }
     if(onCheck) {
-        var result = onCheck(data, $tbl, $tbBtn);//如果需要校验则直接返回
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
         if(result === false) return;
     }
-    var url = $tbBtn.attr("url");
-    var confirmMsg = $tbBtn.attr("confirm") || '您确认要删除该数据？'
+    var url = $btn.attr("url");
+    var confirmMsg = $btn.attr("confirm") || '您确认要删除该数据？'
     $.messager.confirm('确认', confirmMsg,function(r){
         if (r){
             $.post(url, data, function(result){
@@ -258,9 +258,49 @@ tt.delData = function($tbBtn, onCheck){
     });
 }
 
-tt.showSelDlg = function($btn, onCheck){
+tt.showDlg_l = function($btn, onCheck){
     $btn = $btn || $(this);
-    var $btn = $(this);//先获取按键
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
+    var data = $tbl.datagrid("getSelected");
+    if(!data) return tt.showWarn("请先选择需要查看的数据！");
+    var params = $tbl.attr("params");
+    if(params) {
+        params = JSON.parse(params);
+        if(params){
+            for (var key in params) {
+                data[key] = params[key];
+            }
+        }
+    }
+    if(!onCheck){
+        var onCheckFuncStr = $btn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var pvlCode = $btn.attr("pvlCode");
+    var $dlg = $("#dlg_" + pvlCode);
+
+    var $targetTbl = $dlg.find(".easyui-datagrid");
+    var url = $targetTbl.attr("queryUrl");
+    var queryParamsStr = $btn.attr("queryParams");
+    var queryParams = {};
+    if(queryParamsStr && queryParamsStr != ""){
+        var strArr = queryParamsStr.split(",");
+        for(var i = 0; i < strArr.length; ++i){
+            var strArr2 = strArr[i].split(":");
+            var key1 = strArr2[0];
+            var key2 = strArr2[1] || key1;
+            queryParams[key1] = data[key2];
+        }
+    }
+    $targetTbl.datagrid({ url : url, queryParams : queryParams });
+    $dlg.dialog("open");
+};
+tt.showSelDlg = function($btn, onCheck){
+    $btn = $btn || $(this);//先获取按键
     var $frm = $btn.parents("form");//当前的表单
     var data = $frm.form("getData")
     var $dlg = $("#dlg_" + $btn.attr("pvlCode"));
