@@ -28,7 +28,19 @@ for(var pvlCode in opt){
                             </tr>
                             <tr>
                                 <td><label class="tt-fld-label-td">方案：</label></td>
-                                <td><input name="scheName" class="easyui-combobox" data-options="required:true,editable:false,data:__shed.comboData.isBase,onSelect:__shed.onIsBaseChanged" /></td>
+                                <td><input name="scheName" class="easyui-validatebox" readonly data-options="required:true" /></td>
+                                <%
+                                var btnPvl = pvlDs.pvlMap["shed_sche_mgr_l"]
+                                if(btnPvl){
+                                %>
+                                <td><a class="easyui-linkbutton" pvlCode="<%= btnPvl.code%>" map="scheId:id,scheName:name" data-options="onClick:tt.showSelDlg">选择</a></td>
+                                <%
+                                }
+                                %>
+                            </tr>
+                            <tr>
+                                <td><label class="tt-fld-label-td">数量：</label></td>
+                                <td><input name="num" class="easyui-numberbox" data-options="required:true" /></td>
                             </tr>
                             <tr>
                                 <td><label class="tt-fld-label-td">棚长：</label></td>
@@ -65,6 +77,7 @@ for(var pvlCode in opt){
                 %>
                 <a class="easyui-linkbutton" data-options="onClick:tt.closeDlg">取消</a>
             </div>
+        <% include ./sche_toBeSelectedDlg.html %>
         <%
     }
 }

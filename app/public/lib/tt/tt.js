@@ -87,7 +87,7 @@ tt.getFrmInDlg = function($dlg){
 }
 
 //通过权限编码显示create类型的弹出框
-tt.showDlg_c = function($tbBtn, onCheck){
+tt.showDlg_c = function($btn, onCheck){
     $btn = $btn || $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = {};
@@ -117,7 +117,7 @@ tt.showDlg_c = function($tbBtn, onCheck){
     $dlg.dialog("open");
 }
 //通过权限编码显示update类型的弹出框
-tt.showDlg_u = function($tbBtn, onCheck){
+tt.showDlg_u = function($btn, onCheck){
     $btn = $btn || $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
@@ -148,7 +148,7 @@ tt.showDlg_u = function($tbBtn, onCheck){
 }
 
 //通过权限编码显示read类型的弹出框
-tt.showDlg_r = function($tbBtn, onCheck){
+tt.showDlg_r = function($btn, onCheck){
     $btn = $btn || $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
@@ -222,7 +222,7 @@ tt.closeDlg = function($frmBtn){
     $dlg.dialog("close");
 };
 
-tt.delData = function($tbBtn, onCheck){
+tt.delData = function($btn, onCheck){
     $btn = $btn || $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
@@ -284,6 +284,18 @@ tt.showDlg_l = function($btn, onCheck){
     var $dlg = $("#dlg_" + pvlCode);
 
     var $targetTbl = $dlg.find(".easyui-datagrid");
+    var btnParamsStr = $btn.attr("params");
+    if(btnParamsStr){
+        var strArr = queryParamsStr.split(",");
+        var obj = {};
+        for(var i = 0; i < strArr.length; ++i){
+            var strArr2 = strArr[i].split(":");
+            var key1 = strArr2[0];
+            var key2 = strArr2[1] || key1;
+            obj[key1] = data[key2];
+        }
+    }
+
     var url = $targetTbl.attr("queryUrl");
     var queryParamsStr = $btn.attr("queryParams");
     var queryParams = {};
@@ -296,6 +308,7 @@ tt.showDlg_l = function($btn, onCheck){
             queryParams[key1] = data[key2];
         }
     }
+    $targetTbl.attr("params", JSON.stringify(queryParams));
     $targetTbl.datagrid({ url : url, queryParams : queryParams });
     $dlg.dialog("open");
 };
@@ -358,9 +371,9 @@ tt.colFormatter = function(value,row,index){
     return value;
 };
 
-tt.getTblByTBBtn = function(tbBtn){
-    var dataGridPanel = tbBtn.parents(".datagrid");
-    return dataGridPanel.find("table.easyui-datagrid")
+tt.getTblByTBBtn = function($tbBtn){
+    var $dataGridPanel = $tbBtn.parents(".datagrid");
+    return $dataGridPanel.find("table.easyui-datagrid")
 }
 tt.getValueByForm = function($form, name){
     var $input = $form.find("input[name=" + name + "]");
