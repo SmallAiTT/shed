@@ -11,6 +11,7 @@
         "body-parser" : "*",
         "morgan" : "*",
         "ejs" : "*",
-        "jade" : "*"
+        "jade" : "*",
+        "node-xlsx" : "*"
     }
 }
