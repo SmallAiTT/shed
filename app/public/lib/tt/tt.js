@@ -52,14 +52,14 @@ tt.showMsg = function(msgObj, onSuccess, onError){
     var msg = msgObj.msg;
     if(typeof msgObj == "string"){
         msg = msgObj;
-    }else if(!msg){
-        msg = msgObj + "";
+//    }else if(!msg){
+//        msg = msgObj + "";
     }
     if(msgObj.type == "error"){
         $.messager.alert(title, msg, "error");
         if(onError) onError(msgObj.value, msg);
     }else{
-        $.messager.alert(title, msg, "info");
+        if(msg) $.messager.alert(title, msg, "info");
         if(onSuccess) onSuccess(msgObj.value, msg);
     }
 }
@@ -115,7 +115,7 @@ tt.showDlg_c = function($btn, onCheck){
     $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
     $frm.form("load", data);
     $dlg.dialog("open");
-}
+};
 //通过权限编码显示update类型的弹出框
 tt.showDlg_u = function($btn, onCheck){
     $btn = $btn || $(this);
@@ -145,7 +145,7 @@ tt.showDlg_u = function($btn, onCheck){
     $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
     $frm.form("load", data);
     $dlg.dialog("open");
-}
+};
 
 //通过权限编码显示read类型的弹出框
 tt.showDlg_r = function($btn, onCheck){
@@ -179,7 +179,7 @@ tt.showDlg_r = function($btn, onCheck){
     $frm.find("textarea").attr("readonly", "readonly");
     $frm.find(".easyui-combobox").combobox("readonly");
     $dlg.dialog("open");
-}
+};
 //根据权限编码提交表单并且关闭弹出框
 tt.submitDlgFrm = function($frmBtn, onCheck){
     $frmBtn = $frmBtn || $(this);
@@ -356,11 +356,9 @@ tt.selData = function($btn, onCheck){
     }
     $frm.form("validate");
     $dlg.dialog("close");
-}
+};
 
 tt.colFormatter = function(value,row,index){
-    var col = this.col;
-    var field = this.field;
     var data = this.data;
     data = eval('(' + data + ')');
     if(data){
@@ -374,20 +372,20 @@ tt.colFormatter = function(value,row,index){
 tt.getTblByTBBtn = function($tbBtn){
     var $dataGridPanel = $tbBtn.parents(".datagrid");
     return $dataGridPanel.find("table.easyui-datagrid")
-}
+};
 tt.getValueByForm = function($form, name){
     var $input = $form.find("input[name=" + name + "]");
     if($input.length > 0) return $input.val();
     $input = $form.find("textarea[name=" + name + "]");
     if($input.length > 0) return $input.val();
     return null;
-}
+};
 
 tt.getFieldByForm = function($form, name){
     var $input = $form.find("input[name=" + name + "]");
     $input = $input.length > 0 ? $input : $form.find("textarea[name=" + name + "]");
     return $input.parents("tr");
-}
+};
 
 $(function(){
     $(".tt-init").each(function(index, ttInitObj){

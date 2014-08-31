@@ -28,7 +28,8 @@
         shed_sche_mgr_u : {icon:"icon-edit", func:"tt.showDlg_u"},
         shed_sche_mgr_r : {icon:"icon-search", func:"tt.showDlg_r"},
         shed_sche_mgr_d : {icon:"icon-remove", func:"tt.delData", confirm:"删除方案会连同其配置的零件公式列表一并删除，是否继续？"},
-        shed_compExp_mgr_l : {icon:"icon-edit", func:"__shed.showCompExpListDlg"}
+        shed_compExp_mgr_l : {icon:"icon-edit", func:"__shed.showCompExpListDlg"},
+        shed_sche_mgr_t : {icon:"icon-edit", func:"__shed.showScheTestDlg"}
         }
         for(var pvlCode in opt){
         var btnPvl = pvlDs.pvlMap[pvlCode];
@@ -54,4 +55,5 @@
 <% include ./frags/compExp_dlg.html %>
 <% include ./frags/compAll_toBeSelected.html %>
 <% include ./frags/expAll_toBeSelected.html %>
+<% include ./frags/sche_test_dlg.html %>
 <% include ../base/footer.html %>

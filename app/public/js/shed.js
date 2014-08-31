@@ -73,7 +73,7 @@ __shed.onCheck4ChildrenFrm = function(data){
 
 //+++++++++++++++方案相关 开始+++++++++++++++++
 __shed.showCompExpListDlg = function(){
-    var $tbBtn = $(this);
+    var $btn = $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要配置的方案！");
@@ -111,3 +111,56 @@ __shed.finishProj = function(){
         }
     });
 }
+
+__shed.showScheTestDlg = function($btn, onCheck){
+    $btn = $btn || $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
+    var data = $tbl.datagrid("getSelected");
+    if(!data) return tt.showWarn("请先选择需要修改的数据！");
+    var params = $tbl.attr("params");
+    if(params) {
+        params = JSON.parse(params);
+        if(params){
+            for (var key in params) {
+                data[key] = params[key];
+            }
+        }
+    }
+    if(!onCheck){
+        var onCheckFuncStr = $btn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var pvlCode = $btn.attr("pvlCode");
+    var $dlg = $("#dlg_" + pvlCode);
+    var $frm = tt.getFrmInDlg($dlg);
+    //TODO 重置
+    $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
+    $frm.form("load", data);
+    $dlg.dialog("open");
+};
+
+__shed.testSche = function($frmBtn, onCheck){
+    $frmBtn = $frmBtn || $(this);
+    var $dlg = $frmBtn.parents(".easyui-dialog")
+    if(!onCheck){
+        var onCheckFuncStr = $frmBtn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck({}, $frm, $frmBtn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var $frm = tt.getFrmInDlg($dlg);
+    var data = $frm.form("getData")
+    var $resultDlg = $("#tbl_dlg_" + $frmBtn.attr("pvlCode"));
+    var $resultTbl = $resultDlg.find(".easyui-datagrid")
+
+    var url = $resultTbl.attr("queryUrl");
+    var queryParams = data;
+    $resultTbl.datagrid({ url : url, queryParams : queryParams });
+    $resultDlg.dialog("open");
+};

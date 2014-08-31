@@ -1,0 +1,66 @@
+<!-- 零件的cur弹出框 开始 -->
+<%
+var pvlCode = "shed_sche_mgr_t"
+var pvl = pvlDs.pvlMap[pvlCode]
+if(pvl){
+    var dlgId = "dlg_" + pvlCode;
+    var btnsId = "btns_" + pvlCode;
+    var btnsId2 = "#" + btnsId
+
+    var tbl_dlgId = "tbl_dlg_" + pvlCode;
+    var tbl_btnsId = "tbl_btns_" + pvlCode;
+    var tbl_btnsId2 = "#" + tbl_btnsId
+    %>
+        <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
+             data-options="width:600,height:200,modal:true,closed:true,buttons:'<%= btnsId2 %>'">
+            <div>
+                <form class="tt-init" method="post">
+                    <input name="id" hidden />
+                    <table>
+                        <tr>
+                            <td><label class="tt-fld-label-td">棚长：</label></td>
+                            <td><input name="lengths" class="easyui-validatebox" data-options="required:true" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="tt-fld-label-td">顶卷膜：</label></td>
+                            <td><input name="topScrolls" class="easyui-validatebox" data-options="required:true" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="tt-fld-label-td">侧卷膜：</label></td>
+                            <td><input name="edgeScrolls" class="easyui-validatebox" data-options="required:true" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="tt-fld-label-td">前卷膜：</label></td>
+                            <td><input name="frontScrolls" class="easyui-validatebox" data-options="required:true" /></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div id="<%= btnsId%>">
+            <a class="easyui-linkbutton" pvlCode="<%= pvlCode %>" url="<%= pvl.url %>"  data-options="onClick:__shed.testSche">测试</a>
+        </div>
+
+
+        <div class="easyui-dialog" id="<%= tbl_dlgId %>" title="<%= pvl.name %>"
+             data-options="width:600,height:600,modal:true,closed:true,buttons:'<%= tbl_btnsId2 %>'">
+            <div>
+                <table class="easyui-datagrid" title="零件列表" queryUrl="<%= pvl.url %>"
+                       rownumbers="true" singleSelect="true"
+                       data-options="onLoadError:tt.onLoadError4DataGrid">
+                    <thead>
+                    <tr>
+                        <% include ./comp_tblFields.html %>
+                        <th field="count" width="200">数量</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div id="<%= tbl_btnsId%>">
+            <a class="easyui-linkbutton" data-options="onClick:tt.closeDlg">关闭</a>
+        </div>
+    <%
+}
+%>
+<!-- 零件的cur弹出框 结束 -->
