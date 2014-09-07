@@ -1,0 +1,32 @@
+<!-- 零件的cur弹出框 开始 -->
+<%
+var pvlCode = "shed_shed_mgr_cal"
+var pvl = pvlDs.pvlMap[pvlCode]
+if(pvl){
+    var dlgId = "dlg_" + pvlCode;
+    var btnsId = "btns_" + pvlCode;
+    var btnsId2 = "#" + btnsId
+    %>
+
+        <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
+             data-options="width:900,height:600,modal:true,closed:true,buttons:'<%= btnsId2 %>'">
+            <div>
+                <table class="easyui-datagrid" title="零件列表" queryUrl="<%= pvl.url %>"
+                       rownumbers="true" singleSelect="true"
+                       data-options="onLoadError:tt.onLoadError4DataGrid">
+                    <thead>
+                    <tr>
+                        <th field="count" width="80">数量</th>
+                        <% include ./comp_tblFields.html %>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div id="<%= btnsId%>">
+            <a class="easyui-linkbutton" data-options="onClick:tt.closeDlg">关闭</a>
+        </div>
+    <%
+}
+%>
+<!-- 零件的cur弹出框 结束 -->

@@ -43,15 +43,15 @@ if(pvl){
 
 
         <div class="easyui-dialog" id="<%= tbl_dlgId %>" title="<%= pvl.name %>"
-             data-options="width:600,height:600,modal:true,closed:true,buttons:'<%= tbl_btnsId2 %>'">
+             data-options="width:900,height:600,modal:true,closed:true,buttons:'<%= tbl_btnsId2 %>'">
             <div>
                 <table class="easyui-datagrid" title="零件列表" queryUrl="<%= pvl.url %>"
                        rownumbers="true" singleSelect="true"
                        data-options="onLoadError:tt.onLoadError4DataGrid">
                     <thead>
                     <tr>
+                        <th field="count" width="80">数量</th>
                         <% include ./comp_tblFields.html %>
-                        <th field="count" width="200">数量</th>
                     </tr>
                     </thead>
                 </table>

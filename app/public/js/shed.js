@@ -48,8 +48,8 @@ __shed.comboData = {
 
 //+++++++++++++++comp相关 开始+++++++++++++++++
 //显示子零件列表
-__shed.showCompChildren = function($tbBtn){
-    var $tbBtn = $(this);
+__shed.showCompChildren = function($btn){
+    $btn = $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
     var data = $tbl.datagrid("getSelected");
     if(!data) return tt.showWarn("请先选择需要查看的数据！");
@@ -112,6 +112,12 @@ __shed.finishProj = function(){
     });
 }
 
+/**
+ * 显示测试方案的弹出框
+ * @param $btn
+ * @param onCheck
+ * @returns {*}
+ */
 __shed.showScheTestDlg = function($btn, onCheck){
     $btn = $btn || $(this);
     var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
@@ -142,7 +148,11 @@ __shed.showScheTestDlg = function($btn, onCheck){
     $frm.form("load", data);
     $dlg.dialog("open");
 };
-
+/**
+ * 测试方案按键的触发相应
+ * @param $frmBtn
+ * @param onCheck
+ */
 __shed.testSche = function($frmBtn, onCheck){
     $frmBtn = $frmBtn || $(this);
     var $dlg = $frmBtn.parents(".easyui-dialog")
@@ -164,3 +174,32 @@ __shed.testSche = function($frmBtn, onCheck){
     $resultTbl.datagrid({ url : url, queryParams : queryParams });
     $resultDlg.dialog("open");
 };
+
+__shed.calShedComp = function($btn, onCheck){
+    $btn = $btn || $(this);
+    var $tbl = tt.getTblByTBBtn($btn);//获取到datagrid对象
+    var data = $tbl.datagrid("getSelected");
+    if(!data) return tt.showWarn("请先选择需要计算的大棚！");
+    if(!onCheck){
+        var onCheckFuncStr = $btn.attr("onCheck");
+        if(onCheckFuncStr && onCheckFuncStr.trim() != "") onCheck = eval("(" + onCheckFuncStr + ")");
+    }
+    if(onCheck) {
+        var result = onCheck(data, $tbl, $btn);//如果需要校验则直接返回
+        if(result === false) return;
+    }
+    var pvlCode = $btn.attr("pvlCode");
+    var $resultDlg = $("#dlg_" + pvlCode);
+
+
+    var $resultTbl = $resultDlg.find(".easyui-datagrid")
+
+    var url = $resultTbl.attr("queryUrl");
+    var queryParams = data;
+    $resultTbl.datagrid({ url : url, queryParams : queryParams });
+    $resultDlg.dialog("open");
+};
+
+__shed.calProjComp = function(){
+    __shed.calShedComp.apply(this, arguments);
+}

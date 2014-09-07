@@ -6,7 +6,7 @@ var tblId = "tbl_" + pvl.code;
 var barId = tblId + "_toolBar";
 %>
 <div class="easyui-dialog" id="<%= dlgId %>" title="<%= pvl.name %>"
-     data-options="width:600,height:200,modal:true,closed:true">
+     data-options="width:1000,height:500,modal:true,closed:true">
     <div>
         <table id="<%= tblId %>" class="easyui-datagrid" queryUrl="<%= pvl.url %>"
                pagination="true" rownumbers="true" singleSelect="true"
@@ -18,7 +18,7 @@ var barId = tblId + "_toolBar";
                 <th field="scheId" hidden="true" width="100">方案id</th>
                 <th field="name" width="100">大棚名称</th>
                 <th field="scheName" width="100">方案名称</th>
-                <th field="num" width="100">数量</th>
+                <th field="count" width="100">数量</th>
                 <th field="lengths" width="100">棚长</th>
                 <th field="topScrolls" width="100">顶卷膜</th>
                 <th field="edgeScrolls" width="100">侧卷膜</th>
@@ -61,3 +61,4 @@ var barId = tblId + "_toolBar";
 %>
 
 <% include ./shed_dlg.html %>
+<% include ./shed_cal_dlg.html %>

@@ -6,7 +6,7 @@ var xlsx = require('node-xlsx');
 var ttDb = require("../../app/node_modules/tt-db/index")
 var client = ttDb.client;
 var indexArrMap = {
-    "circle_6mx2m" : [1,3,4,6,7],
+    "circle_6mx2m" : [1,3,4,8,9],
     "cube_8mx2.5m" : [1,3,4,9,10]
 }
 var files = ["circle_6mx2m", "cube_8mx2.5m"];
