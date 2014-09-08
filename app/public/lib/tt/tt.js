@@ -395,7 +395,7 @@ $(function(){
         if(!ttInitStr) return;
         var func = eval('(' + ttInitStr + ')');
         if(func) func.call(ttInitObj);
-    })
+    });
     $(".tt-qry-btn").each(function(index, ttQryBtn){
         var $ttQryBtn = $(ttQryBtn);
         $ttQryBtn.linkbutton({

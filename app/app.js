@@ -22,7 +22,6 @@ require("tt-err").embed(app, function(){
     require("tt-pvl").embed(app);
     require("tt-shed").embed(app);
 });
-
 /* istanbul ignore next */
 if (!module.parent) {
     app.listen(expressCfg.port);

@@ -1,30 +1,35 @@
-<% include header.html %>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
 
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/easyui/themes/icon.css" rel="stylesheet"/>
+    <link href="/lib/easyui/themes/bootstrap/easyui.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/lib/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/lib/tt/tt.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+</head>
+<body>
 
-<h2>Basic Layout</h2>
-<p>The layout contains north,south,west,east and center regions.</p>
-<div style="margin:20px 0;"></div>
-<div class="easyui-layout" style="width:700px;height:350px;">
-    <div data-options="region:'north'" style="height:50px"></div>
-    <div data-options="region:'south',split:true" style="height:50px;"></div>
-    <div data-options="region:'east',split:true" title="East" style="width:100px;"></div>
-    <div data-options="region:'west',split:true" title="West" style="width:100px;"></div>
-    <div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
-        <table class="easyui-datagrid"
-               data-options="url:'datagrid_data1.json',method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
-            <thead>
-            <tr>
-                <th data-options="field:'itemid'" width="80">Item ID</th>
-                <th data-options="field:'productid'" width="100">Product ID</th>
-                <th data-options="field:'listprice',align:'right'" width="80">List Price</th>
-                <th data-options="field:'unitcost',align:'right'" width="80">Unit Cost</th>
-                <th data-options="field:'attr1'" width="150">Attribute</th>
-                <th data-options="field:'status',align:'center'" width="60">Status</th>
-            </tr>
-            </thead>
-        </table>
+<% include ./nav-top.html %>
+
+<div id="mainContainer">
+    <div id="tabs" class="easyui-tabs">
+        <div title="主页">
+            <div>
+                大棚管理主页
+            </div>
+        </div>
     </div>
 </div>
 
 
-<% include footer.html %>
+
+
+</body>
+</html>
