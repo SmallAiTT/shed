@@ -7,6 +7,17 @@
     var tblId = "tbl_" + tblPvl.code;
     var barId = tblId + "_toolBar";
     %>
+    <div class="tt-qry-area">
+        <form class="tt-qry-form">
+            <table>
+                <tr>
+                    <td><label>名称：</label></td>
+                    <td><input name="name"/></td>
+                    <td><a class="tt-qry-btn"></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
     <table id="<%= tblId %>" class="easyui-datagrid" title="零件列表" url="<%= tblPvl.url %>"
            pagination="true" rownumbers="true" singleSelect="true"
            toolbar="<%= '#' + barId %>" data-options="onLoadError:tt.onLoadError4DataGrid">

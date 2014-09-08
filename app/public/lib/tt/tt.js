@@ -112,6 +112,7 @@ tt.showDlg_c = function($btn, onCheck){
     var $dlg = $("#dlg_" + pvlCode);
     var $frm = tt.getFrmInDlg($dlg);
     //TODO 重置
+    $frm.form("clear");
     $dlg.attr("tbl", "#" + $tbl.attr("id"));//需要刷新的tbl
     $frm.form("load", data);
     $dlg.dialog("open");
@@ -394,5 +395,27 @@ $(function(){
         if(!ttInitStr) return;
         var func = eval('(' + ttInitStr + ')');
         if(func) func.call(ttInitObj);
+    })
+    $(".tt-qry-btn").each(function(index, ttQryBtn){
+        var $ttQryBtn = $(ttQryBtn);
+        $ttQryBtn.linkbutton({
+            iconCls: 'icon-search',
+            text : "查询",
+            onClick : function(){
+                var $btn = $(this);
+                var $qryArea = $btn.parents("div.tt-qry-area");
+                var $tbl = $qryArea.parent().find(".easyui-datagrid");
+                var $frm = $qryArea.find("form");
+                var data = $frm.form("getData");
+                var queryParams = $tbl.datagrid("options").queryParams;
+                console.log(queryParams);
+                for(var key in data){
+                    queryParams[key] = data[key];
+                }
+                console.log(queryParams);
+                $tbl.datagrid("load");
+//                $tbl.datagrid("load", data);
+            }
+        });
     })
 });

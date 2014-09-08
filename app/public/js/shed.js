@@ -30,6 +30,13 @@ __shed.comboData = {
     },{
         value : 0, text : "否"
     }],
+    isBase2 : [{
+        value : -1, text : "无"
+    },{
+        value : 1, text : "是"
+    },{
+        value : 0, text : "否"
+    }],
 
     projState : [{
         value : "000", text : "未完成"

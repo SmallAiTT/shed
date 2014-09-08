@@ -7,6 +7,21 @@ if(pvl){
 <div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="<%= pvl.name %>"
      data-options="width:900,height:400,modal:true,closed:true">
     <div>
+        <div class="tt-qry-area">
+            <form class="tt-qry-form">
+                <table>
+                    <tr>
+                        <td><label>零件编码：</label></td>
+                        <td><input name="compName"/></td>
+
+                        <td><label>公式名称：</label></td>
+                        <td><input name="expName"/></td>
+
+                        <td><a class="tt-qry-btn"></a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
         <table id="<%= tblId%>" class="easyui-datagrid" queryUrl="<%= pvl.url %>"
                pagination="true" rownumbers="true" singleSelect="true"
                toolbar="<%= '#' + barId %>" data-options="onLoadError:tt.onLoadError4DataGrid">
@@ -14,6 +29,7 @@ if(pvl){
             <tr>
                 <th field="id" hidden="true" width="100"></th>
                 <th field="scheId" hidden="true" width="100"></th>
+                <th field="expId" hidden="true" width="100"></th>
                 <th field="compId" hidden="true" width="100"></th>
                 <th field="compName" width="100">零件名称</th>
                 <th field="expName" width="100">公式名称</th>
@@ -80,7 +96,7 @@ for(var pvlCode in opt){
                         <table>
                             <tr>
                                 <td><label class="tt-fld-label-td">零件名称：</label></td>
-                                <td><input name="compName" class="easyui-validatebox" data-options="required:true" /></td>
+                                <td><input name="compName" class="easyui-validatebox" readonly data-options="required:true" /></td>
                                 <%
                                 var btnPvl = pvlDs.pvlMap["shed_comp_mgr_l"]
                                 if(pvl && pvlCode != "shed_compExp_mgr_r"){
@@ -92,7 +108,7 @@ for(var pvlCode in opt){
                             </tr>
                             <tr>
                                 <td><label class="tt-fld-label-td">公式名称：</label></td>
-                                <td><input name="expName" class="easyui-validatebox" data-options="required:true" /></td>
+                                <td><input name="expName" class="easyui-validatebox" readonly data-options="required:true" /></td>
                                 <%
                                 var btnPvl = pvlDs.pvlMap["shed_exp_mgr_l"]
                                 if(pvl && pvlCode != "shed_compExp_mgr_r"){

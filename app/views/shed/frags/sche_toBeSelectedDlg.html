@@ -4,16 +4,27 @@ if(pvl){
 var btnsId = "btns_" + pvl.code;
 var btnsId2 = "#" + btnsId;
 %>
-<div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="零件列表"
+<div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="方案列表"
      data-options="width:900,height:400,modal:true,closed:true,buttons:'<%= btnsId2%>'">
     <div>
+        <div class="tt-qry-area">
+            <form class="tt-qry-form">
+                <table>
+                    <tr>
+                        <td><label>方案名称：</label></td>
+                        <td><input name="name"/></td>
+                        <td><a class="tt-qry-btn"></a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
         <table class="easyui-datagrid" queryUrl="<%= pvl.url %>"
                pagination="true" rownumbers="true" singleSelect="true"
                data-options="onLoadError:tt.onLoadError4DataGrid">
             <thead>
             <tr>
                 <th field="id" hidden="true" width="100">公式id</th>
-                <th field="name" width="100">公式名称</th>
+                <th field="name" width="100">方案名称</th>
                 <th field="remark" width="200">备注</th>
             </tr>
             </thead>

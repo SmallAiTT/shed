@@ -7,6 +7,18 @@ if(pvl){
     <div class="easyui-dialog" id="<%= 'dlg_' + pvl.code %>" title="零件列表"
         data-options="width:900,height:400,modal:true,closed:true,buttons:'<%= btnsId2%>'">
         <div>
+            <div class="tt-qry-area">
+                <form class="tt-qry-form">
+                    <table>
+                        <tr>
+                            <td><label>公式名称：</label></td>
+                            <td><input name="name"/></td>
+
+                            <td><a class="tt-qry-btn"></a></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
             <table class="easyui-datagrid" queryUrl="<%= pvl.url %>"
                    pagination="true" rownumbers="true" singleSelect="true"
                    data-options="onLoadError:tt.onLoadError4DataGrid">
