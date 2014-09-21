@@ -16,8 +16,12 @@ if(pvl){
                        data-options="onLoadError:tt.onLoadError4DataGrid">
                     <thead>
                     <tr>
+                        <th field="id" hidden="true" width="100">零件ID</th>
+                        <th field="code" width="100">零件代码</th>
+                        <th field="name" width="200">零件名称</th>
                         <th field="count" width="80">数量</th>
-                        <% include ./comp_tblFields.html %>
+                        <th field="unit" width="100">单位</th>
+                        <th field="remark" width="300">备注</th>
                     </tr>
                     </thead>
                 </table>

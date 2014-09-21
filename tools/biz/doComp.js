@@ -6,10 +6,9 @@ var xlsx = require('node-xlsx');
 var ttDb = require("../../app/node_modules/tt-db/index")
 var client = ttDb.client;
 var indexArrMap = {
-    "circle_6mx2m" : [1,3,4,8,9],
-    "cube_8mx2.5m" : [1,3,4,9,10]
+    "comp" : [0,1,2]
 }
-var files = ["circle_6mx2m", "cube_8mx2.5m"];
+var files = ["comp"];
 function getCellValue(cell){
     if(cell) return cell.value || null;
     return null;
@@ -26,16 +25,16 @@ function loadCopms(fileName, cb){
     var data = obj.worksheets[0].data
     var compArr = [];
     var indexArr = indexArrMap[fileName]
-    for(var i = 3; i < data.length; ++i){
+    for(var i = 1; i < data.length; ++i){
         var row = data[i];
         compArr.push({
             code : fileName + "_" + getStrByPreTemp(i, "0000"),
             isBase : 1,
             name : getCellValue(row[indexArr[0]]),
-            spec : getCellValue(row[indexArr[1]]),
-            mates : getCellValue(row[indexArr[2]]),
-            unit : getCellValue(row[indexArr[3]]),
-            remark : getCellValue(row[indexArr[4]])
+//            spec : getCellValue(row[indexArr[1]]),
+//            mates : getCellValue(row[indexArr[2]]),
+            unit : getCellValue(row[indexArr[1]]),
+            remark : getCellValue(row[indexArr[2]])
         });
     }
     async.mapLimit(compArr, 1, function(comp, cb1){
