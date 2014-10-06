@@ -12,6 +12,7 @@
         "morgan" : "*",
         "ejs" : "*",
         "jade" : "*",
-        "node-xlsx" : "*"
+        "node-xlsx" : "*",
+        "xlsx" : "*"
     }
 }
